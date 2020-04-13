@@ -38,6 +38,14 @@ class Sql extends PDO {
 
     }
 
+    public function select($rawQuery, $params = array() ):array{
+
+        $stmt = $this->query($rawQuery, $params);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
     public function selectAll($rawQuery, $params = array() ):array{
 
         $stmt = $this->query($rawQuery, $params);

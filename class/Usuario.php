@@ -60,13 +60,13 @@ class Usuario {
     public function loadById($id){
 
         $sql = new Sql();
-        $result = $sql->selectAll("SELECT * FROM USERS WHERE ID = :IDUSER AND ACTIVE = 1", array(
+        $result = $sql->select("SELECT * FROM USERS WHERE ID = :IDUSER AND ACTIVE = 1", array(
             ":IDUSER"=>$id
         ));
         
         if( !empty($result) ){
 
-            $row = $result[0];
+            $row = $result;
             $this->setIdUser($row['ID']);
             $this->setLogin($row['LOGIN']);
             $this->setPassword($row['PASSWORD']);
