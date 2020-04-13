@@ -91,4 +91,47 @@ class Usuario {
 
     }
 
+    public static function getAllUsers(){
+
+        $sql = new Sql();
+
+        return $sql->selectAll("SELECT * FROM USERS WHERE ACTIVE = 1 ");
+
+    }
+
+    public static function busca($login){
+
+        $sql = new Sql();
+
+        return $sql->selectAll("SELECT * FROM USERS WHERE LOGIN LIKE :SEARCH ORDER BY ID DESC", array(
+            ':SEARCH'=>"%".$login."%"
+        ));
+
+    }
+
+    public function login($login,$password){
+
+        $sql = new Sql();
+        $result = $sql->select("SELECT * FROM USERS WHERE LOGIN = :USR AND PASSWORD = :PASSWD AND ACTIVE = 1", array(
+            ":USR"=>$login 
+            ,":PASSWD"=>$password
+        ));
+        
+        if( $result ){
+
+            $row = $result;
+            $this->setIdUser($row['ID']);
+            $this->setLogin($row['LOGIN']);
+            $this->setPassword($row['PASSWORD']);
+            $this->setDataCreate(new DateTime($row['DATA_CREATE']));
+            ( !empty($row['DATA_UPDATE']) ) ? $this->setDataUpdate(new DateTime($row['DATA_UPDATE'])) : '';
+            $this->setActive($row['ACTIVE']);
+
+        } else {
+
+            throw new Exception("usuario ou senhas invalidos");
+        }
+
+    }
+
 }
