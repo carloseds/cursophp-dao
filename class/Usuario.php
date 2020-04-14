@@ -49,7 +49,7 @@ class Usuario {
         $this->data_update = $value;
     }
 
-    public function getActive():bool{
+    public function getActive(){
         return $this->active;
     }
 
@@ -66,13 +66,7 @@ class Usuario {
         
         if( !empty($result) ){
 
-            $row = $result;
-            $this->setIdUser($row['ID']);
-            $this->setLogin($row['LOGIN']);
-            $this->setPassword($row['PASSWORD']);
-            $this->setDataCreate(new DateTime($row['DATA_CREATE']));
-            ( !empty($row['DATA_UPDATE']) ) ? $this->setDataUpdate(new DateTime($row['DATA_UPDATE'])) : '';
-            $this->setActive($row['ACTIVE']);
+            $this->setData($result);
 
         }
 
@@ -119,17 +113,68 @@ class Usuario {
         
         if( $result ){
 
-            $row = $result;
-            $this->setIdUser($row['ID']);
-            $this->setLogin($row['LOGIN']);
-            $this->setPassword($row['PASSWORD']);
-            $this->setDataCreate(new DateTime($row['DATA_CREATE']));
-            ( !empty($row['DATA_UPDATE']) ) ? $this->setDataUpdate(new DateTime($row['DATA_UPDATE'])) : '';
-            $this->setActive($row['ACTIVE']);
+            $this->setData($result);
 
         } else {
 
             throw new Exception("usuario ou senhas invalidos");
+        }
+
+    }
+
+    public function setData($data){
+        
+        $this->setIdUser($data['ID']);
+        $this->setLogin($data['LOGIN']);
+        $this->setPassword($data['PASSWORD']);
+        $this->setDataCreate(new DateTime($data['DATA_CREATE']));
+        ( !empty($data['DATA_UPDATE']) ) ? $this->setDataUpdate(new DateTime($data['DATA_UPDATE'])) : '';
+        $this->setActive($data['ACTIVE']);
+
+    }
+
+    public function newUser(){
+
+        $sql = new Sql();
+        $result = $sql->insertReturnId("INSERT INTO USERS (LOGIN,PASSWORD) VALUES (:USR, :PASSWD)", array(
+            ":USR"=>$this->getLogin()
+            ,":PASSWD"=>$this->getPassword()
+        ));
+        
+        if( !empty($result['ID']) ){
+
+            $this->loadById($result['ID']);
+
+        } else {
+
+            throw new Exception("Erro ao cadastrar novo usuário");
+        
+        }
+
+    }
+
+    public function updateUser($login,$password){
+
+        $this->setLogin($login);
+        $this->setPassword($password);
+
+        $sql = new Sql();
+        
+        $result = $sql->update("UPDATE USERS SET LOGIN = :LGN, PASSWORD = :PASSWD WHERE ID = :IDUSER AND ACTIVE = :ACT",array(
+            ":LGN"=>$this->getLogin()
+            ,":PASSWD"=>$this->getPassword()
+            ,":IDUSER"=>$this->getIdUser()
+            ,":ACT"=>$this->getActive()
+        ));
+
+        if( !empty($result['ROWCOUNT']) ){
+
+            $this->loadById($this->getIdUser());
+
+        } else {
+
+            throw new Exception("Erro ao atualizar dados do usuário");
+        
         }
 
     }
