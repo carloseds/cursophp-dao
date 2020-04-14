@@ -10,7 +10,7 @@ class Sql extends PDO {
 
         try {
             $this->conn = new PDO("mysql:dbname=".$config['dbname'].';host='.$config['host'], $config['dbuser'], $config['dbpass']);
-            //$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } 
         catch(PDOException $e){
             $msgError = "Error DB: " . $e->getMessage();

@@ -60,7 +60,7 @@ class Usuario {
     public function loadById($id){
 
         $sql = new Sql();
-        $result = $sql->select("SELECT * FROM USERS WHERE ID = :IDUSER AND ACTIVE = 1", array(
+        $result = $sql->select("SELECT * FROM USERS WHERE ID = :IDUSER", array(
             ":IDUSER"=>$id
         ));
         
@@ -174,6 +174,28 @@ class Usuario {
         } else {
 
             throw new Exception("Erro ao atualizar dados do usuário");
+        
+        }
+
+    }
+
+    public function enableDisableUser($id_user,$status){
+
+        $sql = new Sql();
+        $this->setIdUser($id_user);
+
+        $result = $sql->update("UPDATE USERS SET ACTIVE = :ST WHERE ID = :IDUSER", array(
+            ":ST"=>$status
+            ,":IDUSER"=>$this->getIdUser()
+        ));
+
+        if( !empty($result['ROWCOUNT']) ){
+
+            $this->loadById($this->getIdUser());
+
+        } else {
+
+            throw new Exception("Erro ao excluir usuário");
         
         }
 
