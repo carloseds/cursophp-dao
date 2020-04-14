@@ -1,6 +1,8 @@
 <?php 
 //phpinfo();exit;
+require_once("configdb.php");
 require_once("config.php");
+
 
 //carrega apenas um usuario
 /*$usuario = new Usuario();
@@ -23,6 +25,6 @@ $usuario->setPassword("1910caca");
 $usuario->newUser();*/
 //$usuario->loadById(18);
 //$usuario->updateUser("carloseds18@gmail.com","1910@caca");
-$usuario->enableDisableUser(18,1);
+$usuario->enableDisableUser(18,0);
 
 echo $usuario;
