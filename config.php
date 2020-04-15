@@ -9,6 +9,10 @@ spl_autoload_register( function($class_name){
 
     if( file_exists($filename) ){
         require_once($filename);
+    } else {
+
+        echo 'classe nao encontrada';
+        exit;
     }
 
 });

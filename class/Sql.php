@@ -13,7 +13,14 @@ class Sql extends PDO {
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } 
         catch(PDOException $e){
-            $msgError = "Error DB: " . $e->getMessage();
+            
+            $msgerror = json_encode(array(
+                "message" => $e->getMessage()
+                ,"line" => $e->getLine()
+                ,"file" => $e->getFile()
+                ,"code" => $e->getCode()
+            ));
+
         }
 
     }
