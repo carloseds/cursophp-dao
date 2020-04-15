@@ -74,9 +74,12 @@ if( isset($_COOKIE['VSP']) ){
 
 }*/
 
-$filename = "error.log";
+/*$filename = "error.log";
 $title = "ERRO DB";
 $path = "logs".DIRECTORY_SEPARATOR;
-$content = "APENAS UM TESTE";
+$content = array(
+    "CODIGO_ERRO" => 01
+    ,"INFO_ADD" => "APENAS UM TESTE"
+);
 
-$teste = Funcoes::setLog($filename,$title ,$path, $content);
+$teste = Funcoes::setLog($filename,$title ,$path, $content);*/
