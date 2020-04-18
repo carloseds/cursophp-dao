@@ -83,3 +83,44 @@ $content = array(
 );
 
 $teste = Funcoes::setLog($filename,$title ,$path, $content);*/
+
+/*$jwt = new Jwt();
+$token = $jwt->create(array(
+    "id_user" => 123
+    ,"name" => "Carlos Dias"
+));
+
+if( !empty($_GET['JWT']) ){
+    
+    $token = $_GET['JWT'];
+    $info = $jwt->validateJwt($token);
+
+    if( $info ){
+        
+        $dataToken = json_decode( json_encode($info), true );
+        print_r( $dataToken);
+    
+    } else {
+
+        echo "token inválido e/ou não existente";
+        exit;
+
+    }
+
+} else {
+    echo "token inválido e/ou não existente";
+    exit;
+}*/
+//echo $token;
+
+// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoxMjMsIm5hbWUiOiJDYXJsb3MgRGlhcyJ9.enCg6b77tsHEa5zzOteX40OQ-r9RoORS4J9iRkCyCXg
+
+$cura = 0;
+$dias_quarentena = 15;
+
+while( $cura < $dias_quarentena ){
+    
+    $dias_quarentena +=$dias_quarentena;
+    echo $dias_quarentena.'<br/>';
+
+}

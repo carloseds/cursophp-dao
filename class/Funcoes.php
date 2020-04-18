@@ -39,6 +39,8 @@ class Funcoes {
 
         if( !empty($link) && !empty($path) ){
             
+            $path = str_replace("/", DIRECTORY_SEPARATOR, $path);
+            
             $options = [
                 "ssl"=> [
                 "cafile" => "/Applications/XAMPP/xamppfiles/share/curl/curl-ca-bundle.crt",
@@ -163,5 +165,21 @@ class Funcoes {
         }
 
     }
+
+    
+
+    //base
+    // proof
+    /*for( $i = 0, $s = ''; $i < 24; ++$i, $s .= substr("$i", -1 )){
+        $base64_encoded    = base64_encode(    $s );
+        $base64url_encoded = base64url_encode( $s );
+        $base64url_decoded = base64url_decode( $base64url_encoded );
+        $base64_restored   = strtr( $base64url_encoded, '-_', '+/')
+                        . str_repeat('=',
+                            3 - ( 3 + strlen( $base64url_encoded )) % 4
+                            );
+        echo "$s<br>$base64url_decoded<br>$base64_encoded<br>$base64_restored<br>$base64url_encoded<br><br>";
+    }*/
+
 
 }
